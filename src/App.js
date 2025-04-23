@@ -1,63 +1,51 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const drugData = [
-  {
-    id: 1,
-    name: '타이레놀',
-    ingredient: 'Acetaminophen1234567890'
-  },
-  {
-    id: 2,
-    name: '부루펜',
-    ingredient: 'Ibuprofen'
-  },
-  {
-    id: 3,
-    name: '게보린',
-    ingredient: 'Acetaminophen + Isopropylantipyrine + Caffeine'
-  }
-];
-
 function App() {
-  const [selectedDrug, setSelectedDrug] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`/api/search?query=${encodeURIComponent(searchTerm)}`);
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error('검색 중 오류 발생:', error);
+    }
+  };
 
   return (
-    <div className="container">
-      <h1>약품 검색 결과</h1>
-      <table className="drug-table">
-        <thead>
-          <tr>
-            <th>약품명</th>
-            <th>성분명</th>
-          </tr>
-        </thead>
-        <tbody>
-          {drugData.map((drug) => (
-            <tr
-              key={drug.id}
-              onClick={() => setSelectedDrug(drug)}
-              className={selectedDrug?.id === drug.id ? 'selected' : ''}
-            >
-              <td>{drug.name}</td>
-              <td>
-                <span className="ellipsis" title={drug.ingredient}>
-                  {drug.ingredient.length > 10
-                    ? `${drug.ingredient.slice(0, 10)}...`
-                    : drug.ingredient}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="App">
+      <h2>약품 검색</h2>
+      <input
+        type="text"
+        placeholder="약품명이나 성분명을 입력하세요"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>검색</button>
 
-      {selectedDrug && (
-        <div className="selected-info">
-          <h2>선택한 약품 정보</h2>
-          <p><strong>약품명:</strong> {selectedDrug.name}</p>
-          <p><strong>성분명:</strong> {selectedDrug.ingredient}</p>
-        </div>
+      {results.length > 0 && (
+        <>
+          <h2>약품 검색 결과</h2>
+          <table className="responsive-table">
+            <thead>
+              <tr>
+                <th>약품명</th>
+                <th>성분명</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((drug, index) => (
+                <tr key={index}>
+                  <td>{drug.name}</td>
+                  <td>{drug.ingredient}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   );
