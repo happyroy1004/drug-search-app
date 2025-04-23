@@ -1,120 +1,88 @@
 body {
   margin: 0;
-  font-family: "Arial", sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
 }
 
-.container {
-  background: #f9fafb;
-  min-height: 100vh;
+.app-container {
   display: flex;
   justify-content: center;
-  padding: 1rem;
-}
-
-.card {
-  background: #fff;
+  align-items: center;
   padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-  max-width: 600px;
+}
+
+.search-box {
   width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
-.title {
-  font-size: 1.8rem;
-  font-weight: bold;
+.search-box h2 {
   margin-bottom: 1rem;
-  text-align: center;
+  font-size: 1.5rem;
 }
 
-.input-area {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.input {
+.search-input {
   width: 100%;
-  padding: 1rem;
-  font-size: 1.1rem;
+  padding: 10px 15px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
 
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-top: none;
+.suggestions-list {
   list-style: none;
   padding: 0;
-  margin: 0;
-  z-index: 10;
-  max-height: 200px;
+  margin: 0 0 1rem 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 150px;
   overflow-y: auto;
 }
 
-.dropdown-item {
-  padding: 0.75rem;
+.suggestion-item {
+  padding: 10px 15px;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
-  font-size: 1.05rem;
 }
 
-.dropdown-item:hover {
+.suggestion-item:hover {
   background-color: #f0f0f0;
 }
 
-.table {
+.result-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1rem;
   margin-top: 1rem;
 }
 
-th,
-td {
+.result-table th,
+.result-table td {
+  padding: 12px 10px;
   text-align: left;
-  padding: 0.5rem;
-  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
-th:nth-child(2),
-td:nth-child(2) {
-  max-width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.returnBtn {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #007bff;
-  background: none;
-  border: none;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-/* 모바일 최적화 */
-@media (max-width: 768px) {
-  .card {
+@media screen and (max-width: 600px) {
+  .search-box {
     padding: 1rem;
-    margin: 0 0.5rem;
+    border-radius: 0;
+    box-shadow: none;
   }
 
-  .input {
+  .search-input {
     font-size: 1rem;
   }
 
-  .dropdown-item {
-    font-size: 1rem;
-  }
-
-  .table {
+  .result-table th,
+  .result-table td {
     font-size: 0.9rem;
+    padding: 10px 6px;
   }
 }
