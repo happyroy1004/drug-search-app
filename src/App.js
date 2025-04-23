@@ -1,63 +1,59 @@
-const drugData = [
-  { name: "가나티란정", ingredient: "Mosapride", dose: "citrate" },
-  { name: "가모드정", ingredient: "Omeprazole", dose: "20mg" },
-  { name: "가뉴틴캡슐", ingredient: "Gabapentin", dose: "300mg" },
-  { name: "가바렉스정", ingredient: "Gabapentin", dose: "300mg" },
-  { name: "가나프리드정", ingredient: "Mosapride", dose: "5mg" },
-  // 여기에 추가 가능
+// 예시 약물 데이터
+const drugs = [
+  { name: '가바렉스정', ingredient: 'Gabapentin', dosage: '100mg' },
+  { name: '가모드정', ingredient: 'Gamotidine', dosage: '20mg' },
+  { name: '가뉴틴캡슐', ingredient: 'Gabapentin', dosage: '300mg' },
+  { name: '가나프리드정', ingredient: 'Ganafprid', dosage: '10mg' },
 ];
 
-const searchInput = document.getElementById("searchInput");
-const autocompleteList = document.getElementById("autocomplete-list");
-const resultsTable = document.querySelector("#resultsTable tbody");
+const searchInput = document.getElementById('searchInput');
+const autocompleteList = document.getElementById('autocompleteList');
+const drugResults = document.getElementById('drugResults');
 
-// 자동완성 리스트 렌더링
-searchInput.addEventListener("input", () => {
-  const input = searchInput.value.trim().toLowerCase();
-  autocompleteList.innerHTML = "";
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim();
+  console.log('🔍 입력 중 검색어:', query);
 
-  if (input === "") return;
+  autocompleteList.innerHTML = '';
+  if (query.length === 0) {
+    return;
+  }
 
-  const filtered = drugData.filter(drug =>
-    drug.name.includes(input)
-  );
+  const matched = drugs.filter(drug => drug.name.includes(query));
+  console.log('🧠 드롭다운 후보:', matched.map(d => d.name));
 
-  filtered.forEach(drug => {
-    const item = document.createElement("li");
-    item.textContent = drug.name;
-    item.addEventListener("click", () => {
+  matched.forEach(drug => {
+    const li = document.createElement('li');
+    li.textContent = drug.name;
+    li.addEventListener('click', () => {
       searchInput.value = drug.name;
-      autocompleteList.innerHTML = "";
-      showResults(drug.name); // 드롭다운 선택 시도 정확 검색
+      autocompleteList.innerHTML = '';
+      performSearch(drug.name);
     });
-    autocompleteList.appendChild(item);
+    autocompleteList.appendChild(li);
   });
 });
 
-// 엔터로 검색
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    showResults(searchInput.value.trim());
-    autocompleteList.innerHTML = "";
+searchInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    const query = searchInput.value.trim();
+    performSearch(query);
   }
 });
 
-// 검색결과 필터링 및 렌더링
-function showResults(query) {
-  const result = drugData.filter(drug =>
-    drug.name === query
-  );
+function performSearch(query) {
+  console.log('🔎 검색 시작 (선택 or 엔터):', query);
+  const results = drugs.filter(drug => drug.name === query);
+  console.log('📋 필터링된 결과:', results);
 
-  resultsTable.innerHTML = "";
-
-  result.forEach(drug => {
-    const row = document.createElement("tr");
+  drugResults.innerHTML = '';
+  results.forEach(drug => {
+    const row = document.createElement('tr');
     row.innerHTML = `
       <td>${drug.name}</td>
       <td>${drug.ingredient}</td>
-      <td>${drug.dose}</td>
+      <td>${drug.dosage}</td>
     `;
-    resultsTable.appendChild(row);
+    drugResults.appendChild(row);
   });
 }

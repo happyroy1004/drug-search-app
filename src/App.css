@@ -1,74 +1,72 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+  padding: 20px;
+  background: #f4f4f4;
 }
 
 .container {
-  max-width: 700px;
-  margin: auto;
-  padding: 1rem;
-  background: white;
-  margin-top: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 h1 {
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
-input[type="text"] {
+input {
   width: 100%;
-  padding: 12px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-#autocomplete-list {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 0;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: auto;
-  background: white;
-}
-
-#autocomplete-list li {
   padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+ul#autocompleteList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+ul#autocompleteList li {
+  padding: 8px;
   cursor: pointer;
 }
 
-#autocomplete-list li:hover {
+ul#autocompleteList li:hover {
   background-color: #eee;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
 }
 
-table th, table td {
-  border: 1px solid #ddd;
+th, td {
   padding: 8px;
-  text-align: left;
+  border-bottom: 1px solid #ccc;
 }
 
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .container {
-    margin: 0.5rem;
-    padding: 0.5rem;
+    width: 100%;
+    padding: 10px;
   }
 
-  input[type="text"] {
-    font-size: 14px;
+  input {
+    font-size: 1.2rem;
   }
 
-  table th, table td {
-    font-size: 14px;
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  table, th, td {
+    font-size: 1rem;
   }
 }

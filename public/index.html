@@ -2,28 +2,26 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>약물 검색</title>
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
   <div class="container">
     <h1>약물 검색</h1>
-    <input type="text" id="searchInput" placeholder="제품명을 입력하세요..." autocomplete="off">
-    <ul id="autocomplete-list"></ul>
-
-    <table id="resultsTable">
+    <input type="text" id="searchInput" placeholder="약물명을 입력하세요" autocomplete="off" />
+    <ul id="autocompleteList"></ul>
+    <table id="drugTable">
       <thead>
         <tr>
-          <th>제품명</th>
+          <th>약품명</th>
           <th>성분명</th>
           <th>용량</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="drugResults"></tbody>
     </table>
   </div>
 
-  <script src="app.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
