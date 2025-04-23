@@ -1,109 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>약물 검색</title>
-  <style>
-    /* 기존 스타일 그대로 */
-    * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
-    .container { max-width: 500px; margin: 20px auto; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 20px; }
-    h1 { text-align: center; font-size: 24px; margin-bottom: 20px; }
-    .search-container { position: relative; }
-    #searchInput { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
-    .autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ccc; max-height: 200px; overflow-y: auto; z-index: 10; }
-    .autocomplete-item { padding: 10px; cursor: pointer; }
-    .autocomplete-item:hover { background-color: #eee; }
-    table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #ccc; }
-    @media (max-width: 600px) {
-      .container { margin: 10px; padding: 15px; width: 95%; }
-      h1 { font-size: 20px; }
-      #searchInput { font-size: 14px; }
-      th, td { font-size: 14px; }
-    }
-  </style>
+  <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <div class="container">
     <h1>약물 검색</h1>
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="약품명 입력">
-      <div id="autocomplete" class="autocomplete-list"></div>
-    </div>
-    <table id="resultTable" style="display: none;">
+    <input type="text" id="searchInput" placeholder="제품명을 입력하세요..." autocomplete="off">
+    <ul id="autocomplete-list"></ul>
+
+    <table id="resultsTable">
       <thead>
         <tr>
-          <th>약품명</th>
+          <th>제품명</th>
           <th>성분명</th>
           <th>용량</th>
         </tr>
       </thead>
-      <tbody id="resultBody"></tbody>
+      <tbody></tbody>
     </table>
   </div>
 
-  <script>
-    const drugData = [
-      { name: '가나티란정', ingredient: 'Mosapride', dosage: 'citrate' },
-      { name: '가나텍정', ingredient: 'ItoprideHydrochloride', dosage: '50mg' },
-      { name: '가나프리드정', ingredient: 'ItoprideHcl', dosage: '50mg' },
-      { name: '가바틴캡슐300mg', ingredient: 'Gabapentin', dosage: '300mg' },
-      { name: '가바론정100mg', ingredient: 'Gabapentin', dosage: '100mg' },
-      { name: '가모드정', ingredient: 'MosaprideCitrate', dosage: '5mg' },
-      { name: '가모드서방정', ingredient: 'MosaprideCitrate', dosage: '15mg' },
-    ];
-
-    const input = document.getElementById('searchInput');
-    const autocomplete = document.getElementById('autocomplete');
-    const resultTable = document.getElementById('resultTable');
-    const resultBody = document.getElementById('resultBody');
-
-    input.addEventListener('input', function () {
-      const value = this.value.trim();
-      autocomplete.innerHTML = '';
-      if (value === '') return;
-
-      const matches = drugData.filter(drug =>
-        drug.name.includes(value)
-      );
-
-      matches.forEach(drug => {
-        const item = document.createElement('div');
-        item.classList.add('autocomplete-item');
-        item.textContent = drug.name;
-        item.addEventListener('click', () => {
-          showDrugInfo(drug);
-          autocomplete.innerHTML = '';
-          input.value = drug.name;
-        });
-        autocomplete.appendChild(item);
-      });
-    });
-
-    // ✅ Enter 키로 검색 가능하게 추가
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        const keyword = this.value.trim();
-        const match = drugData.find(drug => drug.name === keyword);
-        if (match) {
-          showDrugInfo(match);
-          autocomplete.innerHTML = '';
-        }
-      }
-    });
-
-    function showDrugInfo(drug) {
-      resultTable.style.display = 'table';
-      resultBody.innerHTML = `
-        <tr>
-          <td>${drug.name}</td>
-          <td>${drug.ingredient}</td>
-          <td>${drug.dosage}</td>
-        </tr>
-      `;
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>

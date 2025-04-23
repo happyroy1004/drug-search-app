@@ -1,90 +1,63 @@
-import React, { useState } from 'react';
-import './App.css';
-import drugData from './drugData.json'; // 이 경로는 실제 위치에 맞게 조정해주세요
+const drugData = [
+  { name: "가나티란정", ingredient: "Mosapride", dose: "citrate" },
+  { name: "가모드정", ingredient: "Omeprazole", dose: "20mg" },
+  { name: "가뉴틴캡슐", ingredient: "Gabapentin", dose: "300mg" },
+  { name: "가바렉스정", ingredient: "Gabapentin", dose: "300mg" },
+  { name: "가나프리드정", ingredient: "Mosapride", dose: "5mg" },
+  // 여기에 추가 가능
+];
 
-function App() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
+const searchInput = document.getElementById("searchInput");
+const autocompleteList = document.getElementById("autocomplete-list");
+const resultsTable = document.querySelector("#resultsTable tbody");
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
+// 자동완성 리스트 렌더링
+searchInput.addEventListener("input", () => {
+  const input = searchInput.value.trim().toLowerCase();
+  autocompleteList.innerHTML = "";
 
-    if (value === '') {
-      setSuggestions([]);
-      setFilteredData([]);
-    } else {
-      const matchedSuggestions = drugData
-        .filter((item) => item.제품명.includes(value))
-        .map((item) => item.제품명);
-      const uniqueSuggestions = [...new Set(matchedSuggestions)];
-      setSuggestions(uniqueSuggestions);
-    }
-  };
+  if (input === "") return;
 
-  const handleSelectSuggestion = (suggestion) => {
-    setSearchTerm(suggestion);
-    setSuggestions([]);
-    const filtered = drugData.filter((item) => item.제품명 === suggestion);
-    setFilteredData(filtered);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const filtered = drugData.filter((item) => item.제품명 === searchTerm);
-    setFilteredData(filtered);
-  };
-
-  return (
-    <div className="app-container">
-      <div className="search-box">
-        <h2>약물 검색</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-            placeholder="제품명을 입력하세요"
-            className="search-input"
-          />
-        </form>
-        {suggestions.length > 0 && (
-          <ul className="suggestions-list">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                onClick={() => handleSelectSuggestion(suggestion)}
-                className="suggestion-item"
-              >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        )}
-        {filteredData.length > 0 && (
-          <table className="result-table">
-            <thead>
-              <tr>
-                <th>약품명</th>
-                <th>성분명</th>
-                <th>용량</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.제품명}</td>
-                  <td>{item.성분명}</td>
-                  <td>{item.용량}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </div>
+  const filtered = drugData.filter(drug =>
+    drug.name.includes(input)
   );
-}
 
-export default App;
+  filtered.forEach(drug => {
+    const item = document.createElement("li");
+    item.textContent = drug.name;
+    item.addEventListener("click", () => {
+      searchInput.value = drug.name;
+      autocompleteList.innerHTML = "";
+      showResults(drug.name); // 드롭다운 선택 시도 정확 검색
+    });
+    autocompleteList.appendChild(item);
+  });
+});
+
+// 엔터로 검색
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    showResults(searchInput.value.trim());
+    autocompleteList.innerHTML = "";
+  }
+});
+
+// 검색결과 필터링 및 렌더링
+function showResults(query) {
+  const result = drugData.filter(drug =>
+    drug.name === query
+  );
+
+  resultsTable.innerHTML = "";
+
+  result.forEach(drug => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${drug.name}</td>
+      <td>${drug.ingredient}</td>
+      <td>${drug.dose}</td>
+    `;
+    resultsTable.appendChild(row);
+  });
+}
