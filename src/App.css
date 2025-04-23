@@ -1,12 +1,13 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background: #f4f4f4;
 }
 
 .container {
-  max-width: 600px;
+  width: 100%;
+  max-width: 1200px;  /* Adjusted to make the layout responsive */
   margin: 0 auto;
   background: #fff;
   padding: 20px;
@@ -15,6 +16,7 @@ body {
 
 h1 {
   font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
 input {
@@ -29,7 +31,7 @@ ul#autocompleteList {
   padding: 0;
   margin: 0;
   border: 1px solid #ccc;
-  max-height: 150px;
+  max-height: 200px;  /* Increased height for better visibility */
   overflow-y: auto;
 }
 
@@ -45,6 +47,7 @@ ul#autocompleteList li:hover {
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th, td {
@@ -52,10 +55,36 @@ th, td {
   border-bottom: 1px solid #ccc;
 }
 
+.checkbox-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox-container label {
+  font-size: 1rem;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
 @media screen and (max-width: 600px) {
   .container {
-    width: 100%;
-    padding: 10px;
+    padding: 15px;
   }
 
   input {
@@ -68,5 +97,10 @@ th, td {
 
   table, th, td {
     font-size: 1rem;
+  }
+
+  .checkbox-container {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
