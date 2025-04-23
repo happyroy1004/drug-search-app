@@ -1,5 +1,47 @@
-/* src/App.css */
-body {
-  margin: 0;
+.container {
+  max-width: 600px;
+  margin: 40px auto;
   font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.drug-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.drug-table th,
+.drug-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.drug-table tr:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #e0f7fa;
+}
+
+.selected-info {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  text-align: left;
+}
+
+.ellipsis {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: top;
 }
