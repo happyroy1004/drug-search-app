@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from "react";
 import data from "./drugData.json";
 import "./App.css";
@@ -6,7 +5,6 @@ import "./App.css";
 function App() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [results, setResults] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [sameDoseOnly, setSameDoseOnly] = useState(false);
 
@@ -21,39 +19,15 @@ function App() {
 
     const lower = value.toLowerCase();
     const filtered = data
-      .filter((item) =>
-        item["약품명"]?.toLowerCase().startsWith(lower)
-      )
+      .filter((item) => item["약품명"]?.toLowerCase().startsWith(lower))
       .slice(0, 10);
-
     setSuggestions(filtered);
-  };
-
-  const handleSearch = () => {
-    const exactMatch = data.filter((item) =>
-      item["약품명"]?.toLowerCase().includes(query.toLowerCase())
-    );
-
-    const strictMatch = query.length >= 2
-      ? exactMatch.filter((item) =>
-          item["약품명"].toLowerCase().includes(query.toLowerCase())
-        )
-      : exactMatch;
-
-    setResults(strictMatch);
-    setSelectedDrug(null);
-    setSuggestions([]);
   };
 
   const handleSuggestionClick = (item) => {
     setQuery(item["약품명"]);
+    setSelectedDrug(item);
     setSuggestions([]);
-    setTimeout(() => handleSearch(), 0);
-  };
-
-  const handleSelectDrug = (drug) => {
-    setSelectedDrug(drug);
-    setSameDoseOnly(false);
   };
 
   const getRelatedDrugs = () => {
@@ -69,61 +43,43 @@ function App() {
     <div className="container">
       <div className="card">
         <h1 className="title">약물 검색</h1>
-        <div className="searchWrapper">
-          <div className="searchBox">
-            <input
-              type="text"
-              value={query}
-              placeholder="약품명 입력"
-              onChange={handleInputChange}
-            />
-            <button onClick={handleSearch}>검색</button>
-          </div>
-          {suggestions.length > 0 && (
-            <ul className="dropdown">
-              {suggestions.map((item, idx) => (
-                <li key={idx} onClick={() => handleSuggestionClick(item)}>
-                  {item["약품명"]}
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className="input-area">
+          <input
+            type="text"
+            value={query}
+            placeholder="약품명 입력"
+            onChange={handleInputChange}
+            className="input"
+          />
         </div>
+        {suggestions.length > 0 && (
+          <ul className="dropdown">
+            {suggestions.map((item, idx) => (
+              <li
+                key={idx}
+                className="dropdown-item"
+                onClick={() => handleSuggestionClick(item)}
+              >
+                {item["약품명"]}
+              </li>
+            ))}
+          </ul>
+        )}
 
-        {!selectedDrug ? (
-          <table className="resultTable">
-            <thead>
-              <tr>
-                <th>약품명</th>
-                <th>성분명</th>
-                <th>용량</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((drug, idx) => (
-                <tr key={idx} onClick={() => handleSelectDrug(drug)}>
-                  <td>{drug["약품명"]}</td>
-                  <td>
-                    {drug["성분명"].length > 10
-                      ? `${drug["성분명"].slice(0, 10)}...`
-                      : drug["성분명"]}
-                  </td>
-                  <td>{drug["용량"]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
+        {selectedDrug && (
           <>
-            <p><strong>선택한 약품:</strong> {selectedDrug["약품명"]}</p>
+            <p>
+              <strong>선택한 약품:</strong> {selectedDrug["약품명"]}
+            </p>
             <label>
               <input
                 type="checkbox"
                 checked={sameDoseOnly}
                 onChange={() => setSameDoseOnly((prev) => !prev)}
-              /> 동일 용량만 보기
+              />
+              동일 용량만 보기
             </label>
-            <table className="resultTable">
+            <table className="table">
               <thead>
                 <tr>
                   <th>약품명</th>
@@ -137,9 +93,9 @@ function App() {
                 {getRelatedDrugs().map((item, idx) => (
                   <tr key={idx}>
                     <td>{item["약품명"]}</td>
-                    <td>
+                    <td title={item["성분명"]}>
                       {item["성분명"].length > 10
-                        ? `${item["성분명"].slice(0, 10)}...`
+                        ? item["성분명"].slice(0, 10) + "..."
                         : item["성분명"]}
                     </td>
                     <td>{item["용량"]}</td>

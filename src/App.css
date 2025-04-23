@@ -1,59 +1,43 @@
-/* App.css */
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9fafb;
+  font-family: "Arial", sans-serif;
 }
 
 .container {
+  background: #f9fafb;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   padding: 1rem;
-  min-height: 100vh;
 }
 
 .card {
-  background: white;
-  padding: 1.5rem;
+  background: #fff;
+  padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
   width: 100%;
-  max-width: 640px;
 }
 
 .title {
   font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-.searchWrapper {
+.input-area {
   position: relative;
   margin-bottom: 1rem;
 }
 
-.searchBox {
-  display: flex;
-}
-
-.searchBox input {
-  flex: 1;
-  padding: 0.75rem;
-  font-size: 1rem;
+.input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
   border: 1px solid #ccc;
-  border-radius: 8px 0 0 8px;
-}
-
-.searchBox button {
-  padding: 0 1rem;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
+  border-radius: 0.5rem;
 }
 
 .dropdown {
@@ -65,62 +49,72 @@ body {
   border: 1px solid #ccc;
   border-top: none;
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  z-index: 10;
   max-height: 200px;
   overflow-y: auto;
-  z-index: 10;
 }
 
-.dropdown li {
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
+.dropdown-item {
+  padding: 0.75rem;
   cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-size: 1.05rem;
 }
 
-.resultTable {
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
   margin-top: 1rem;
 }
 
-.resultTable th,
-.resultTable td {
-  padding: 0.5rem;
+th,
+td {
   text-align: left;
+  padding: 0.5rem;
   border-top: 1px solid #eee;
 }
 
-.resultTable th:nth-child(2),
-.resultTable td:nth-child(2) {
-  max-width: 120px;
-  width: 120px;
+th:nth-child(2),
+td:nth-child(2) {
+  max-width: 100px;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .returnBtn {
   margin-top: 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #007bff;
   background: none;
   border: none;
-  color: #007bff;
-  cursor: pointer;
   text-decoration: underline;
+  cursor: pointer;
 }
 
+/* 모바일 최적화 */
 @media (max-width: 768px) {
-  .container {
-    padding: 0.5rem;
-  }
-
   .card {
     padding: 1rem;
+    margin: 0 0.5rem;
   }
 
-  .resultTable {
-    font-size: 0.95rem;
+  .input {
+    font-size: 1rem;
+  }
+
+  .dropdown-item {
+    font-size: 1rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
   }
 }
