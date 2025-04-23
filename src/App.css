@@ -1,52 +1,126 @@
-.App {
+/* App.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 640px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   text-align: center;
-  padding: 20px;
-  font-family: sans-serif;
 }
 
-input {
-  padding: 8px;
-  font-size: 16px;
-  margin-right: 8px;
+.searchWrapper {
+  position: relative;
+  margin-bottom: 1rem;
 }
 
-button {
-  padding: 8px 12px;
-  font-size: 16px;
+.searchBox {
+  display: flex;
+}
+
+.searchBox input {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+}
+
+.searchBox button {
+  padding: 0 1rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 8px 8px 0;
   cursor: pointer;
 }
 
-.responsive-table {
-  width: 90%;
-  max-width: 600px;
-  margin: 20px auto;
-  border-collapse: collapse;
-  font-family: sans-serif;
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
 }
 
-.responsive-table th,
-.responsive-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
+.dropdown li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.resultTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.resultTable th,
+.resultTable td {
+  padding: 0.5rem;
   text-align: left;
+  border-top: 1px solid #eee;
+}
+
+.resultTable th:nth-child(2),
+.resultTable td:nth-child(2) {
   max-width: 120px;
-  white-space: nowrap;
+  width: 120px;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.responsive-table th {
-  background-color: #f8f8f8;
+.returnBtn {
+  margin-top: 1rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-  .responsive-table th,
-  .responsive-table td {
-    font-size: 14px;
-    padding: 8px;
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
   }
 
-  h2 {
-    font-size: 18px;
+  .card {
+    padding: 1rem;
+  }
+
+  .resultTable {
+    font-size: 0.95rem;
   }
 }
