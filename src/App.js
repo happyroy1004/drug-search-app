@@ -5,7 +5,7 @@ const drugs = [
   { name: '가모드정', ingredient: 'MosaprideCitrate', dosage: '5.29mg' },
   { name: '가나프리드정', ingredient: 'ItoprideHcl', dosage: '50mg' },
   { name: '가뉴틴캡슐300mg', ingredient: 'Gabapentin', dosage: '300mg' },
-  // 필요 시 더 추가
+  // 추가 가능
 ];
 
 const searchInput = document.getElementById('searchInput');
@@ -21,36 +21,40 @@ searchInput.addEventListener('input', () => {
   if (query.length === 0) return;
 
   const matched = drugs.filter(drug => drug.name.includes(query));
-  console.log('자동완성 제안 :', matched);
+  console.log('자동완성 제안 :', matched.map(d => d.name));
 
   matched.forEach(drug => {
     const li = document.createElement('li');
     li.textContent = drug.name;
 
     li.addEventListener('click', () => {
-      console.log('✅ 선택한 드롭다운 항목:', drug.name);
+      console.log('✅ 드롭다운 선택됨:', drug.name);
+
+      // 입력 필드 업데이트 + 검색 실행
       searchInput.value = drug.name;
       autocompleteList.innerHTML = '';
-      performSearchByIncludes(drug.name); // ⬅ 포함 검색 수행
+      performSearchByIncludes(drug.name);  // <<< 오직 선택된 텍스트로 검색!
     });
 
     autocompleteList.appendChild(li);
   });
 });
 
-// 엔터 입력 시 검색
+// 엔터 검색
 searchInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     const query = searchInput.value.trim();
+    console.log('🔎 엔터 검색 실행:', query);
     performSearchByIncludes(query);
     autocompleteList.innerHTML = '';
   }
 });
 
-// 포함 검색 함수
+// 포함 검색
 function performSearchByIncludes(query) {
   const results = drugs.filter(drug => drug.name.includes(query));
-  console.log('📋 검색 결과:', results);
+  console.log('📋 최종 검색어:', query);
+  console.log('📋 검색 결과:', results.map(d => d.name));
 
   drugResults.innerHTML = '';
   if (results.length === 0) {
